@@ -1,0 +1,19 @@
+name: NoCropJumping
+version: '1.0'
+main: xyz.uhalexz.NoCropJumping
+api-version: '1.20'
+authors: [ uhalexz ]
+description: Disable the feature of crop jumping on Minecraft servers!
+
+permissions:
+  ncj.bypass:
+    description: Allows a player to trample crops
+    default: false
+
+commands:
+  nocropjumping:
+    description: Toggles crop protection
+    usage: /nocropjumping
+    permission: ncj.toggle
+    aliases:
+      - ncj

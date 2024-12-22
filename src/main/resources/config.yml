@@ -1,0 +1,6 @@
+
+messages:
+  logging: true
+  message: "&eYou cannot trample crops!"
+
+cropjumping: false
