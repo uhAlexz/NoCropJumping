@@ -4,10 +4,12 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import xyz.uhalexz.NoCropJumping;
 
@@ -21,27 +23,27 @@ public class CropListener implements Listener {
 
     @EventHandler
     public void noUpRoot(PlayerInteractEvent event) {
-
         if (!plugin.getConfig().getBoolean("cropjumping")) {
             if (event.getClickedBlock() != null
                     && event.getAction() == Action.PHYSICAL
-                    && event.getClickedBlock().getType() == Material.FARMLAND
-                    && !event.getPlayer().hasPermission("ncj.bypass")) {
+                    && event.getClickedBlock().getType() == Material.FARMLAND) {
                 event.setCancelled(true);
 
                 if (plugin.getConfig().getBoolean("messages.logging")) {
-
                     Player player = event.getPlayer();
                     String message = plugin.getConfig().getString("messages.message").replace("&", "§");
 
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(message));
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 1.0f);
                 }
-
             }
         }
-
-
     }
 
+    @EventHandler
+    public void preventTrample(EntityInteractEvent event) {
+        if (event.getBlock() != null && event.getBlock().getType() == Material.FARMLAND) {
+            event.setCancelled(true);
+        }
+    }
 }
